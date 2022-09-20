@@ -7,6 +7,7 @@ import { Home } from './component/Home/Home';
 import axios from 'axios';
 import { Product } from './component/Product/Product';
 import { Admin } from './component/Admin/Admin';
+import { PageNotFound } from './Pages/PageNotFound';
 
 function App() {
   const [products, setProducts] = useState<ProductType[]>();
@@ -38,6 +39,7 @@ function App() {
       <Route path="/shop" element={products && <Product allproducts={products} /> }/>
       <Route path="/admin"  element={products && <Admin  products={products}/>}/>
       <Route  path="/Cart"  />
+      <Route path="*" element={<PageNotFound />}/>
       {/* <Route path="" element={< />} /> */}
     </Routes>
     </>

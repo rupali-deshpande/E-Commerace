@@ -9,7 +9,12 @@ import {AiFillHeart} from 'react-icons/ai'
 //   cartCount: number
 // }
 ///function Header({cartCount}:Props)
+interface productProp {
+  wishlist: ProductType[];
+  cart: ProductType[];
+}
 function Header() {
+  
 
   return (
     <nav className="navbar">

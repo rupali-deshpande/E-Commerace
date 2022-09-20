@@ -62,25 +62,3 @@ export function Product({allproducts }:Iprops) {
     )
 }
 
-
-// {items.map((item: ProductType) => (
-//     <div className='column'>
-//       <AiFillDelete  values={item.id} className="icon" size="2em" /> 
-
-//       <div className="card" key={item.id}  >
-//         <img className='cat' src={item.images} alt="Avatar" />
-//         <h3>{item.title.length > 20
-//                     ? item.title.substring(0, 20)
-//                     : item.title} </h3>
-//         <p>{item.description.length > 100
-//                     ? item.description.substring(0, 100)
-                    
-//                     : item.description}</p>
-//         <p><b>{item.price}</b></p>
-       
-//         {/* //conditional rendering */}
-//         <button className="button3" value={item.id} name={item.id}  > 'Add to Wishlist'</button>
-//         <button className="button3" value={item.id} name={item.id} >'Add to Cart'</button>
-//       </div>
-//     </div>
-//   ))}
