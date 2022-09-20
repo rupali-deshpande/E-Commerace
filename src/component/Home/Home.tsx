@@ -20,7 +20,7 @@ export function Home({products}:Iprops) {
 
     return(
         <>
-        <button onClick={handleOnClick}>Add New Shop Data</button>
+        <button onClick={()=>handleOnClick}>Add New Shop Data</button>
         {items && items.map((item) => {
         return <Product key={Math.random().toString()}  allproducts={items}   />
       })}

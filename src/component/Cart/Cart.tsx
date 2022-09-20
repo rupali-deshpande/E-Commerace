@@ -18,7 +18,7 @@ export function Cart({products , handleAddToCart , itemDeleteHandler ,handleWish
         <>
         {products.map((item: ProductType) => (
         <div className='column'>
-          <AiFillDelete    id={item.id}  onClick={(e: React.MouseEvent<Element, MouseEvent>) => {
+          <AiFillDelete id={item.id}  onClick={(e: React.MouseEvent<Element, MouseEvent>) => {
               itemDeleteHandler(e.currentTarget.id);
               console.log(e.currentTarget.id)
             }}className="icon" size="2em" /> 
@@ -40,7 +40,7 @@ export function Cart({products , handleAddToCart , itemDeleteHandler ,handleWish
           ) : (
             <button className="button3"  value={item.id} name={item.id} onClick={() => {
               setItemInWishlist(true);
-              handleWishList(item);
+               handleWishList(item);
               
                 console.log(itemInWishlist)
               }}

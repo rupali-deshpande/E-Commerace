@@ -30,6 +30,17 @@ function App() {
     }
 
   },[])
+  const newlyAddeddata = (data:ProductType) => {
+    console.log(data)
+
+    if(products){
+    //const newArr= [...items , data]
+    setProducts((prevalue:any) => {
+      return([...prevalue , data])
+    })}
+    
+  }
+
 
   return (
     <>
@@ -38,7 +49,7 @@ function App() {
       <Route path="/" element={products && <Home products={products}/>} />
       <Route path="/home" element={products && <Home  products={products} />}/>
       <Route path="/shop" element={products && <Product allproducts={products} /> }/>
-      <Route path="/admin"  element={products && <Admin  products={products}/>}/>
+      <Route path="/admin"  element={products && <Admin  products={products} formFN={newlyAddeddata}/>}/>
       <Route  path="/Cart"  />
       <Route path="*" element={<PageNotFound />}/>
       {/* <Route path="" element={< />} /> */}

@@ -8,6 +8,7 @@ interface Iprops {
    
   }
 
+
 export function Product({allproducts }:Iprops) {
     const [items, setitems] = useState<ProductType[]>(allproducts);
     const [addtoCart, setProducttoCart] = useState<ProductType[]>([]);
@@ -48,8 +49,7 @@ export function Product({allproducts }:Iprops) {
         );
         console.log(data)
       };
-
-
+      
 
     return(
         <>
