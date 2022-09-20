@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 import { Product } from "../Product/Product";
 
 
@@ -8,6 +9,10 @@ interface Iprops {
   }
 export function Admin({products}:Iprops) {
     const [items, setitems] = useState<ProductType[]>(products);
+    const location= useLocation()
+    const urlvalue=  new URLSearchParams(location.search);
+    const value=urlvalue.get('q' )||'React Test';
+
     return (
       
        
@@ -17,6 +22,7 @@ export function Admin({products}:Iprops) {
           <h2>Register here</h2>
         </div>
         <div className="info">
+        <input className="fname" type="text" name="name" disabled placeholder="Full name" defaultValue={value} />
           <input className="fname" type="text" name="name" placeholder="Full name" />
           <input type="text" name="name" placeholder="Email"/>
           <input type="text" name="name" placeholder="Phone number" />

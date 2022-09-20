@@ -35,6 +35,7 @@ function App() {
     <>
     <Header />
     <Routes>
+      <Route path="/" element={products && <Home products={products}/>} />
       <Route path="/home" element={products && <Home  products={products} />}/>
       <Route path="/shop" element={products && <Product allproducts={products} /> }/>
       <Route path="/admin"  element={products && <Admin  products={products}/>}/>
