@@ -1,46 +1,42 @@
 
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { AiFillDelete } from 'react-icons/ai'
+import { DataContext } from '../../context/DataProvider';
+import '../Product/Product.css'
 
-interface Iprops {
-    products: ProductType[];
-    handleAddToCart: (clickedItem: ProductType) => void;
-    itemDeleteHandler: (e: string) => void;
-    handleWishList:(clickedItem: ProductType) => void;
-   // wishDataHandler:  ProductType ;
-    
-  }
-export function Cart({products , handleAddToCart , itemDeleteHandler ,handleWishList}:Iprops) {
+ export const Cart: React.FC<{
+  product: ProductType; 
+  }> = ({ product }) => { 
     const [itemInWishlist, setItemInWishlist] = useState(false);
     const [itemInAddToCart, setItemAddToCart] = useState(false);
-
+    const {addtoCart , addtoWishlist} =useContext(DataContext);
     return (
         <>
-        {products.map((item: ProductType) => (
-        <div className='column'>
-          <AiFillDelete id={item.id}  onClick={(e: React.MouseEvent<Element, MouseEvent>) => {
-              itemDeleteHandler(e.currentTarget.id);
-              console.log(e.currentTarget.id)
+        
+        <div className='column' >
+          <AiFillDelete id={product.id}  onClick={() => {
+              // CartContext.addtoCart(item);
+              console.log(product)
             }}className="icon" size="2em" /> 
 
-          <div className="card" key={item.id}  >
-            <img className='cat' src={item.images} alt="Avatar" />
-            <h3>{item.title.length > 20
-                        ? item.title.substring(0, 20)
-                        : item.title} </h3>
-            <p>{item.description.length > 100
-                        ? item.description.substring(0, 100)
+          <div className="card" key={product.id}  >
+            <img className='cat' src={product.images} alt="Avatar" />
+            <h3>{product.title.length > 20
+                        ? product.title.substring(0, 20)
+                        : product.title} </h3>
+            <p>{product.description.length > 100
+                        ? product.description.substring(0, 100)
                         
-                        : item.description}</p>
-            <p><b>{item.price}</b></p>
+                        : product.description}</p>
+            <p><b>{product.price}</b></p>
            
             {/* //conditional rendering */}
             {itemInWishlist ? (
             <button >Added to wishlist</button>
           ) : (
-            <button className="button3"  value={item.id} name={item.id} onClick={() => {
+            <button className="button3"  value={product.id} name={product.id} onClick={() => {
               setItemInWishlist(true);
-               handleWishList(item);
+              addtoWishlist(product)
               
                 console.log(itemInWishlist)
               }}
@@ -48,20 +44,21 @@ export function Cart({products , handleAddToCart , itemDeleteHandler ,handleWish
             </button>
           )}              
          {itemInAddToCart ? (
-            <button >Add to Cart</button>
+            <button >Added to Cart</button>
           ) : (
-            <button className="button3"  value={item.id} name={item.id} onClick={() => {
+            <button className="button3"  value={product.id} name={product.id} onClick={() => {
               setItemAddToCart(true);
-              handleAddToCart(item);
+              addtoCart(product);
               
-                console.log(itemInWishlist)
+              
+                console.log(itemInAddToCart)
               }}
             > Add to Cart
             </button>
           )}              
           </div>
         </div>
-      ))}
+      
         </>
     )
 }

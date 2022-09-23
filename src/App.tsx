@@ -8,53 +8,58 @@ import axios from 'axios';
 import { Product } from './component/Product/Product';
 import { Admin } from './component/Admin/Admin';
 import { PageNotFound } from './Pages/PageNotFound';
+import { DataProvider } from './context/DataProvider';
 
-function App() {
-  const [products, setProducts] = useState<ProductType[]>();
+export const  App =() =>{
+  // const [products, setProducts] = useState<ProductType[]>();
   
-  useEffect(() => {
-   // setLoading(true);
-    axios.get("https://fakestoreapi.com/products").then((res) => {
-      setProducts(res.data)
-      console.log('MOUNT');
-      //setLoading(false)
-      console.log(res.data)
-    })
-    .catch(
-      (error) => {
-        console.log(error);
-     }
-    )
-    return () => {
-      console.log('UNMOUNT');
-    }
+  // useEffect(() => {
+  //  // setLoading(true);
+  //   axios.get("https://fakestoreapi.com/products").then((res) => {
+  //     setProducts(res.data)
+  //     console.log('MOUNT');
+  //     //setLoading(false)
+  //     console.log(res.data)
+  //   })
+  //   .catch(
+  //     (error) => {
+  //       console.log(error);
+  //    }
+  //   )
+  //   return () => {
+  //     console.log('UNMOUNT');
+  //   }
 
-  },[])
-  const newlyAddeddata = (data:ProductType) => {
-    console.log(data)
+  // },[])
+  // const newlyAddeddata = (data:ProductType) => {
+  //   console.log(data)
 
-    if(products){
-    //const newArr= [...items , data]
-    setProducts((prevalue:any) => {
-      return([...prevalue , data])
-    })}
+  //   if(products){
+  //   //const newArr= [...items , data]
+  //   setProducts((prevalue:any) => {
+  //     return([...prevalue , data])
+  //   })}
     
-  }
+  // }
 
 
   return (
     <>
+   
     <Header />
+    <DataProvider>
     <Routes>
-      <Route path="/" element={products && <Home products={products}/>} />
-      <Route path="/home" element={products && <Home  products={products} />}/>
-      <Route path="/shop" element={products && <Product allproducts={products} /> }/>
-      <Route path="/admin"  element={products && <Admin  products={products} formFN={newlyAddeddata}/>}/>
+      <Route path="/home" element={<Home />} />
+      {/* <Route path="/home" element={<Home   />}/> */}
+      {/* <Route path="/shop" element={products && <Product /> }/>
+      <Route path="/admin"  element={products && <Admin  products={products} formFN={newlyAddeddata}/>}/> */}
       <Route  path="/Cart"  />
       <Route path="*" element={<PageNotFound />}/>
       {/* <Route path="" element={< />} /> */}
     </Routes>
+    </DataProvider>
     </>
+
   );
 }
 

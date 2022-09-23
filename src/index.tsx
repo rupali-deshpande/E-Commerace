@@ -4,13 +4,25 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
+import { DataProvider } from './context/DataProvider';
+import { ErrorFallback } from './ErrorFallback';
+import { ErrorBoundary } from 'react-error-boundary';
+
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <BrowserRouter>
-    <App />
+  <ErrorBoundary FallbackComponent={ErrorFallback}
+      onReset={() => {
+        // reset the state of your app so the error doesn't happen again
+      }}>
+ 
+  <App />
+  
+  </ErrorBoundary>
+   
   </BrowserRouter>
 );
 
