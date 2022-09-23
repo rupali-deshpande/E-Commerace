@@ -24,13 +24,15 @@ interface AppState {
 
 export const DataProvider: React.FC<({children:JSX.Element})> = (props)=> {
   const [items, setProducts] = useState<ProductType[]>();
+  const[isLoading , setLoading]=useState(false)
   const [cartData, setCartData] = useState<ProductType[]>([]);
   const [wishData, setWishdata] = useState<ProductType[]>([]);
   const [addedProducts, setAddedProducts] = useState<ProdAddNew[]>([]);
   useEffect(() => {
-    // setLoading(true);
+    setLoading(true);
      axios.get("https://dummyjson.com/products").then((res) => {
        setProducts(res.data.products);
+       setLoading(false)
      })
      .catch(
        (error) => {
