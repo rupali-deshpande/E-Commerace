@@ -9,40 +9,10 @@ import { Product } from './component/Product/Product';
 import { Admin } from './component/Admin/Admin';
 import { PageNotFound } from './Pages/PageNotFound';
 import { DataProvider } from './context/DataProvider';
+import CartDetail from './component/CartDetail';
+import { CartItem } from './component/CartItemDetail';
 
 export const  App =() =>{
-  // const [products, setProducts] = useState<ProductType[]>();
-  
-  // useEffect(() => {
-  //  // setLoading(true);
-  //   axios.get("https://fakestoreapi.com/products").then((res) => {
-  //     setProducts(res.data)
-  //     console.log('MOUNT');
-  //     //setLoading(false)
-  //     console.log(res.data)
-  //   })
-  //   .catch(
-  //     (error) => {
-  //       console.log(error);
-  //    }
-  //   )
-  //   return () => {
-  //     console.log('UNMOUNT');
-  //   }
-
-  // },[])
-  // const newlyAddeddata = (data:ProductType) => {
-  //   console.log(data)
-
-  //   if(products){
-  //   //const newArr= [...items , data]
-  //   setProducts((prevalue:any) => {
-  //     return([...prevalue , data])
-  //   })}
-    
-  // }
-
-
   return (
     <>
    
@@ -50,13 +20,14 @@ export const  App =() =>{
     <DataProvider>
     <Routes>
       <Route path="/home" element={<Home />} />
-      {/* <Route path="/home" element={<Home   />}/> */}
-      {/* <Route path="/shop" element={products && <Product /> }/>
-      <Route path="/admin"  element={products && <Admin  products={products} formFN={newlyAddeddata}/>}/> */}
       <Route  path="/Cart"  />
       <Route path="*" element={<PageNotFound />}/>
-      {/* <Route path="" element={< />} /> */}
+      <Route 
+           path="/Shop/:id"
+          element={<CartItem/>}
+        />
     </Routes>
+
     </DataProvider>
     </>
 

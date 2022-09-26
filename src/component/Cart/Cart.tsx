@@ -1,6 +1,7 @@
 
 import { useContext, useState } from 'react';
 import { AiFillDelete } from 'react-icons/ai'
+import { useNavigate } from 'react-router-dom';
 import { DataContext } from '../../context/DataProvider';
 import '../Product/Product.css'
 
@@ -10,11 +11,12 @@ import '../Product/Product.css'
     const [itemInWishlist, setItemInWishlist] = useState(false);
     const [itemInAddToCart, setItemAddToCart] = useState(false);
     const {addtoCart , addtoWishlist} =useContext(DataContext);
+    const navigate = useNavigate();
     return (
         <>
         
-        <div className='column' >
-          <AiFillDelete id={product.id}  onClick={() => {
+        <div className='column'  onClick={() => navigate(`/shop/${product.id}`)}>
+          <AiFillDelete id={product.id}  onClick={ () => {
               // CartContext.addtoCart(item);
               console.log(product)
             }}className="icon" size="2em" /> 

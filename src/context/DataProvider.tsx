@@ -1,13 +1,15 @@
 import axios from "axios";
 import React, { Children } from "react";
 import { useEffect, useState } from "react";
+import '../http-common';
 
 interface AppState {
   products: ProductType[] | undefined;
   cartProducts: ProductType[];
   wishProducts: ProductType[];
   addtoCart:(data:ProductType) => void;
-  addtoWishlist:(data:ProductType)=>void
+  addtoWishlist:(data:ProductType)=>void;
+  isLoading: boolean
   
   }
   interface Props {
@@ -18,29 +20,46 @@ interface AppState {
     cartProducts: [],
     wishProducts: [],
     addtoCart: () => {},
-    addtoWishlist:() => {}
+    addtoWishlist:() => {},
+    isLoading:false
     
   })
 
 export const DataProvider: React.FC<({children:JSX.Element})> = (props)=> {
-  const [items, setProducts] = useState<ProductType[]>();
+  const [items, setItems] = useState<ProductType[]>();
   const[isLoading , setLoading]=useState(false)
   const [cartData, setCartData] = useState<ProductType[]>([]);
   const [wishData, setWishdata] = useState<ProductType[]>([]);
   const [addedProducts, setAddedProducts] = useState<ProdAddNew[]>([]);
+  const [error, setError] = useState(null);
+  const { REACT_APP_BASEURL } = process.env;
   useEffect(() => {
-    setLoading(true);
-     axios.get("https://dummyjson.com/products").then((res) => {
-       setProducts(res.data.products);
-       setLoading(false)
+
+    setLoading(true)
+    
+    // axios({
+    //     method: 'GET',
+    //     baseURL: 'http://api.fakeshop-api.com',
+    //     url: '/products/getAllProducts',
+    //   })
+    //     .then((data ) => {
+    //       setItems(data.data.products) 
+    //     })
+    //     .catch(err => console.dir(err))
+    //     .finally(() => setLoading(false))
+    
+     axios.get(REACT_APP_BASEURL).then((res) => {
+      setItems(res.data.products);
+       setLoading(false);
+    
      })
+    
      .catch(
        (error) => {
          console.log(error);
       }
      )
-    
-   
+    getAllProduct();
    const cartdata: string = localStorage.getItem("products")!;
 
    if (cartdata) {
@@ -55,10 +74,17 @@ export const DataProvider: React.FC<({children:JSX.Element})> = (props)=> {
    } else {
      setWishdata([]);
    }
-   
-
+   setLoading(false);
  }, []);
- 
+ const getAllProduct = () => {
+  axios.get("https://www.fakeshop-api.com/products/getAllProducts")
+  .then((response) => {
+      const gettheproducts = response.data.items.gettheproducts;
+  }).catch((error) => {
+      console.log(error)
+  })
+
+}
 
  const addToCartHandle = (data: ProductType) => {
   setCartData((prevData) => {
@@ -92,7 +118,8 @@ const prodAdd = (data: ProdAddNew) => {
     cartProducts: cartData,
     wishProducts: wishData,
     addtoCart:addToCartHandle,
-    addtoWishlist:wishListHandle
+    addtoWishlist:wishListHandle,
+    isLoading:isLoading
 
     
   }} >{props.children}</DataContext.Provider>

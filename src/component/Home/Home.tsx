@@ -9,7 +9,7 @@ import { Cart } from "../Cart/Cart";
 
 export const Home: React.FC<{}> = () => {
  
-  const {products} =useContext(DataContext);
+  const {products , isLoading} =useContext(DataContext);
   
   let navigate = useNavigate();
     const handleOnClick = () => {
@@ -21,7 +21,7 @@ export const Home: React.FC<{}> = () => {
     return(
         <>
         <button onClick={handleOnClick}>Add New Shop Data</button>
-        { products?.map((item) => {
+        { !isLoading &&  products?.map((item) => {
            return <Cart key={Math.random().toString()} product={item}  /> }
         )}
         </>
