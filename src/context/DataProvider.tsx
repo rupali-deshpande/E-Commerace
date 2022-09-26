@@ -36,19 +36,7 @@ export const DataProvider: React.FC<({children:JSX.Element})> = (props)=> {
   useEffect(() => {
 
     setLoading(true)
-    
-    // axios({
-    //     method: 'GET',
-    //     baseURL: 'http://api.fakeshop-api.com',
-    //     url: '/products/getAllProducts',
-    //   })
-    //     .then((data ) => {
-    //       setItems(data.data.products) 
-    //     })
-    //     .catch(err => console.dir(err))
-    //     .finally(() => setLoading(false))
-    
-     axios.get(REACT_APP_BASEURL).then((res) => {
+     axios.get("https://dummyjson.com/products").then((res) => {
       setItems(res.data.products);
        setLoading(false);
     

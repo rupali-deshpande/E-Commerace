@@ -4,7 +4,8 @@ interface ProductType {
   _id?: string | undefined;
   id?: string;
   title: string;
-  images?: string;
+  images: string;
+  images:string[];
   description: string;
   price: number;
   discountPercentage?: number;

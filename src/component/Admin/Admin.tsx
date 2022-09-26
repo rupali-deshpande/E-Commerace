@@ -13,7 +13,9 @@ export function Admin({products , formFN}:Iprops) {
     const titleRef = useRef<HTMLInputElement>(null);
     const descriptionRef = useRef<HTMLInputElement>(null);
     const prizeRef=useRef<HTMLInputElement>(null);
+    const imageRef=useRef<HTMLInputElement>(null);
     const [enterTitle, setTitle] = useState('')
+    const [enterImage, setImage] = useState('')
     const [enterDescription, setDescription] = useState('')
     const [enterPrice, setprice] = useState(Number)
     const [formData, setFormData] = useState<ProdAddNew[]>([])
@@ -42,12 +44,13 @@ export function Admin({products , formFN}:Iprops) {
     const onchange = (event: React.SyntheticEvent) => {
         event.preventDefault();
         
-        if (titleRef.current != null && descriptionRef.current!=null && prizeRef.current!=null) {
+        if (titleRef.current != null && descriptionRef.current!=null && prizeRef.current!=null && imageRef.current!=null) {
             
             const refObje= {
                 title:titleRef.current.value,
                 description:descriptionRef.current?.value,
-                price:prizeRef.current?.valueAsNumber
+                price:prizeRef.current?.valueAsNumber,
+                images:imageRef.current?.value
             }
             // TypeScript knows that ref is not null here
             console.log(refObje);
@@ -101,7 +104,7 @@ export function Admin({products , formFN}:Iprops) {
             </div>
             <div>
                 <label>Image </label>
-                <input type="file" onChange={fileSelectHandler} />
+                <input type="file" value={enterImage} ref={imageRef} onChange={fileSelectHandler}  />
             </div>
         </div>
         <div>
