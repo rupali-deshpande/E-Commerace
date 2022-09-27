@@ -23,12 +23,13 @@ export const Home: React.FC<{}> = () => {
 
     return(
         <Wrapper>
-        <Button onClick={handleOnClick}>Add New Shop Data</Button>
-        <Grid container spacing={3}>
-        { !isLoading &&  products?.map((item) => {
-           return  <Grid item key={item.id} xs={12} sm={4}> <Cart key={Math.random().toString()} product={item}  />
-           
-         </Grid> }
+        <Button onClick={handleOnClick}>Add New Shop Data
+
+        </Button>
+        <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 3, sm: 8, md: 12 }}>
+        { !isLoading  && products?.map((item) => {
+           return  <Grid item key={item.id} xs={2} sm={4} md={4}> <Cart key={Math.random().toString()} product={item}  />
+            </Grid> }
         )}
        </Grid>
         </Wrapper>

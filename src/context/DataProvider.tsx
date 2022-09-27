@@ -9,6 +9,7 @@ interface AppState {
   wishProducts: ProductType[];
   addtoCart:(data:ProductType) => void;
   addtoWishlist:(data:ProductType)=>void;
+  formFN: (data: ProductType) => void;
   isLoading: boolean
   
   }
@@ -21,6 +22,7 @@ interface AppState {
     wishProducts: [],
     addtoCart: () => {},
     addtoWishlist:() => {},
+    formFN:() => {},
     isLoading:false
     
   })
@@ -36,25 +38,31 @@ export const DataProvider: React.FC<({children:JSX.Element})> = (props)=> {
   useEffect(() => {
 
     setLoading(true)
-     axios.get("https://dummyjson.com/products").then((res) => {
+     axios.get("http://127.0.0.1:8000/api/v1/products").then((res) => {
+      console.log("product data" ,res)
       setItems(res.data.products);
+      
        setLoading(false);
-    
      })
-    
      .catch(
        (error) => {
          console.log(error);
       }
+     
      )
-    getAllProduct();
-   const cartdata: string = localStorage.getItem("products")!;
+     axios.get("http://127.0.0.1:8000/api/v1/products/CartData").then((response) =>{
+      console.log("AddtoCart Data" , response.data)
+      //setCartData(response.data)
+    })
 
-   if (cartdata) {
-     setCartData(JSON.parse(localStorage.getItem("products")!));
-   } else {
-     setCartData([]);
-   }
+    
+  //  const cartdata: string = localStorage.getItem("products")!;
+
+  //  if (cartdata) {
+  //    setCartData(JSON.parse(localStorage.getItem("products")!));
+  //  } else {
+  //    setCartData([]);
+  //  }
    const wishdata: string = localStorage.getItem("WishProducts")!;
 
    if (wishdata) {
@@ -64,24 +72,23 @@ export const DataProvider: React.FC<({children:JSX.Element})> = (props)=> {
    }
    setLoading(false);
  }, []);
- const getAllProduct = () => {
-  axios.get("https://www.fakeshop-api.com/products/getAllProducts")
-  .then((response) => {
-      const gettheproducts = response.data.items.gettheproducts;
-  }).catch((error) => {
-      console.log(error)
-  })
-
-}
+ 
 
  const addToCartHandle = (data: ProductType) => {
-  setCartData((prevData) => {
-        const arr = prevData?.map((event) => event);
-        const obj = [...arr, data];
-        localStorage.setItem("AddToCart", JSON.stringify(obj));
-        return obj;
+  
+  
+        
+        
+        axios.post("http://127.0.0.1:8000/api/v1/products/CartData",data ).then((response)=> {
+          setCartData((prevItems) => {
+            const newCartArray= [...prevItems , response.data]
+            return newCartArray
+          })
+      
+        });
+        
        
-      })
+      
     }
     const wishListHandle = (data: ProductType) => {
       setWishdata((prevData) => {
@@ -95,7 +102,9 @@ const prodAdd = (data: ProdAddNew) => {
   setAddedProducts((prevProd) => {
     const arr = [...prevProd, data];
     return arr;
+    
   });
+  console.log("form", data)
 };
   
   console.log(items)
@@ -107,7 +116,8 @@ const prodAdd = (data: ProdAddNew) => {
     wishProducts: wishData,
     addtoCart:addToCartHandle,
     addtoWishlist:wishListHandle,
-    isLoading:isLoading
+    isLoading:isLoading,
+    formFN:prodAdd
 
     
   }} >{props.children}</DataContext.Provider>

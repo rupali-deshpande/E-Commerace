@@ -14,9 +14,10 @@ export const Wrapper = styled.div`
   }
 
   img {
-    max-height: 250px;
-    object-fit: cover;
-    border-radius: 20px 20px 0 0;
+    height: 200,
+            width: 400,
+            maxHeight: { xs: 233, md: 167 },
+            maxWidth: { xs: 350, md: 250 },
   }
 
   div {
@@ -25,3 +26,5 @@ export const Wrapper = styled.div`
     height: 100%;
   }
 `;
+
+

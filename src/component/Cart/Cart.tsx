@@ -1,5 +1,5 @@
 
-import { Button, IconButton } from '@mui/material';
+import { Button, CardMedia, IconButton } from '@mui/material';
 import { useContext, useState } from 'react';
 import { AiFillDelete } from 'react-icons/ai'
 import { useNavigate } from 'react-router-dom';
@@ -14,18 +14,35 @@ import { Wrapper } from '../Cart/Cart.style';
   }> = ({ product }) => { 
     const [itemInWishlist, setItemInWishlist] = useState(false);
     const [itemInAddToCart, setItemAddToCart] = useState(false);
-    const {addtoCart , addtoWishlist} =useContext(DataContext);
+    //const {addtoCart , addtoWishlist} =useContext(DataContext);
     const navigate = useNavigate();
+    const{addtoCart , addtoWishlist}=useContext(DataContext);
     return (
         <>
         <Wrapper>
-      <img src={product.images[0]} alt={product.title} />
+          
+        <CardMedia
+          component="img"
+          sx={{
+            height: 200,
+            width: 400,
+            maxHeight: { xs: 233, md: 167 },
+            maxWidth: { xs: 350, md: 250 },
+          }}
+          src={product.images[0]}
+        />
       <div>
-        <h3>{product.title}</h3>
-        <p>{product.description}</p>
+      <h3>{product.title.length > 20
+                        ? product.title.substring(0, 20)
+                        : product.title} </h3>
+        <p>{product.description.length > 100
+                        ? product.description.substring(0, 100)
+                        
+                        : product.description}</p>
         <h3>${product.price}</h3>
       </div>
-      <Button >Add to cart</Button>
+      <Button onClick={()=>addtoCart(product)} >Add to cart</Button>
+      <Button onClick={()=>addtoWishlist(product)} >Add to wishlist</Button>
     </Wrapper>
         
         </>

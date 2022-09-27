@@ -1,5 +1,7 @@
-import { useRef, useState } from "react";
+import axios from "axios";
+import { useContext, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { DataContext } from "../../context/DataProvider";
 import { Product } from "../Product/Product";
 
 
@@ -8,8 +10,9 @@ interface Iprops {
     formFN: (data: ProductType) => void;
     
   }
-export function Admin({products , formFN}:Iprops) {
-    const [items, setitems] = useState<ProductType[]>(products);
+export function Admin() {
+    const{products , formFN}=useContext(DataContext)
+    const [items, setitems] = useState<ProductType[]>();
     const titleRef = useRef<HTMLInputElement>(null);
     const descriptionRef = useRef<HTMLInputElement>(null);
     const prizeRef=useRef<HTMLInputElement>(null);
@@ -41,7 +44,7 @@ export function Admin({products , formFN}:Iprops) {
 
     }
 
-    const onchange = (event: React.SyntheticEvent) => {
+    const submitHandler = (event: React.SyntheticEvent) => {
         event.preventDefault();
         
         if (titleRef.current != null && descriptionRef.current!=null && prizeRef.current!=null && imageRef.current!=null) {
@@ -54,12 +57,17 @@ export function Admin({products , formFN}:Iprops) {
             }
             // TypeScript knows that ref is not null here
             console.log(refObje);
-            formFN(refObje)
+            //formFN(refObje)
             localStorage.setItem("Form", JSON.stringify( refObje ));
             titleRef.current.value="";
             descriptionRef.current.value=""
             prizeRef.current.value=""
             //descriptionRef.current.value="";
+            axios.post("http://127.0.0.1:8000/api/v1/products" , refObje).then((response) =>{
+                console.log("data from form ",response)
+                //formFN(response.data.product)
+                return (response.data.product)
+            })
             return;
             
           }
@@ -74,7 +82,10 @@ export function Admin({products , formFN}:Iprops) {
             images: undefined
         }
         console.log(enterTitle, enterDescription, enterPrice)
-        setFormData((prevValue) => [...prevValue, filledData]);
+        //setFormData((prevValue) => [...prevValue, filledData]);
+       
+        
+
         //setTitle('');
         //setDescription('');
         //setprize(0);
@@ -84,7 +95,7 @@ export function Admin({products , formFN}:Iprops) {
     return (
       
        
-        <form onSubmit={onchange} className="form">
+        <form onSubmit={submitHandler} className="form">
         <div>
             <div>
                 <input disabled defaultValue={value} />
