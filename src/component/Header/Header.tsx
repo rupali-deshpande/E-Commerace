@@ -1,43 +1,60 @@
 
-import React from 'react';
-import { Link } from 'react-router-dom';
-import '../Header/Header.css'
-import {MdAddShoppingCart} from 'react-icons/md'
-import {AiFillHeart} from 'react-icons/ai'
 
+import { AppBar, Button, Container, Toolbar } from '@mui/material';
+import Typography from "@mui/material/Typography";
+import AdbIcon from "@mui/icons-material/Adb";
+import { useNavigate } from 'react-router-dom';
+import Box from "@mui/material/Box";
 // type Props = {
 //   cartCount: number
 // }
 ///function Header({cartCount}:Props)
-interface productProp {
-  wishlist: ProductType[];
-  cart: ProductType[];
-}
+
+const pages = ["Admin", "WishList", "AddToCartList"];
+
 function Header() {
-  
+  const navigate = useNavigate();
 
   return (
-    <nav className="navbar">
-      <div className="logo">Shopify</div>
-      <ul className="nav-links">
-
-        <div className="menu">
-          <li><Link to="/home"  >Home</Link></li>
-          <li><Link to="/shop">Shop</Link></li>
-         
-          <li><Link to="/Cart">Cart</Link></li>
-          <li><Link to="/admin">Admin</Link></li>
-          <li><button ><Link to="/CartItem"><MdAddShoppingCart /></Link>
-            </button></li>
-            <li><button><Link to="/wishList"><AiFillHeart /></Link>
-            </button></li>
-        </div>
-      </ul>
-
-      
-    </nav>
-
+ 
+<AppBar position="static">
+      <Container maxWidth="xl">
+        <Toolbar disableGutters>
+          <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+          <Typography
+            variant="h6"
+            noWrap
+            component="a"
+            onClick={() => navigate(`/`)}
+            sx={{
+              mr: 2,
+              display: { xs: "none", md: "flex" },
+              fontFamily: "monospace",
+              fontWeight: 700,
+              letterSpacing: ".3rem",
+              color: "inherit",
+              textDecoration: "none",
+            }}
+          >
+            Shopify
+          </Typography>
+          <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
+          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+            {pages.map((page) => (
+              <Button
+                key={page}
+                onClick={() => navigate(`/${page}`)}
+                sx={{ my: 2, color: "white", display: "block" }}
+              >
+                {page}
+              </Button>
+            ))}
+          </Box>
+        </Toolbar>
+      </Container>
+    </AppBar>
   );
-}
+};
+
 export default Header
 

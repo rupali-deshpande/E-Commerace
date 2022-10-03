@@ -3,6 +3,7 @@ import { Cart } from "../Cart/Cart";
 import { AiFillDelete } from 'react-icons/ai'
 import '../Product/Product.css'
 import { DataContext } from "../../context/DataProvider";
+import { ProductType } from "../../types";
 
 interface Iprops {
     allproducts: ProductType[];

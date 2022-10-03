@@ -1,6 +1,6 @@
 declare module "*.module.css";
 declare module "*.gif";
-interface ProductType {
+export interface ProductType {
   _id?: string | undefined;
   id?: string;
   title: string;
@@ -16,7 +16,7 @@ interface ProductType {
   thumbnail?: string;
 }
 
-interface ProdAddNew {
+export interface ProdAddNew {
   title: string;
   description: string | undefined;
   images: string | undefined;
@@ -24,6 +24,7 @@ interface ProdAddNew {
 }
 
 
-interface Products {
+export interface ProductsModel {
   products: ProductType[];
+  
 }

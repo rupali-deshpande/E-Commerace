@@ -7,6 +7,8 @@ import { BrowserRouter } from 'react-router-dom';
 import { DataProvider } from './context/DataProvider';
 import { ErrorFallback } from './ErrorFallback';
 import { ErrorBoundary } from 'react-error-boundary';
+import { Provider } from 'react-redux';
+import store from './store';
 
 
 const root = ReactDOM.createRoot(
@@ -18,9 +20,9 @@ root.render(
       onReset={() => {
         // reset the state of your app so the error doesn't happen again
       }}>
- 
+  <Provider store={store}>
   <App />
-  
+  </Provider>
   </ErrorBoundary>
    
   </BrowserRouter>
