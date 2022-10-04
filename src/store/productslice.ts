@@ -1,10 +1,13 @@
+
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ProductsModel, ProductType } from "../types";
 import { productsAction } from "./productsaction";
 
 
 const initailizeProductState:ProductsModel= {
-    products:[]
+    products:[],
+    cartProducts:[],
+    wishProducts:[]
 }
 
 const productSlice=createSlice(
@@ -14,6 +17,12 @@ const productSlice=createSlice(
         reducers: {
             setProducts(state, action){
                 state.products=action.payload;
+            },
+            setCartProduct(state , action){
+                state.cartProducts=action.payload
+            },
+            setWishProduct(state , action){
+                state.wishProducts=action.payload
             }
         }
     }

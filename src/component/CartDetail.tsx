@@ -6,6 +6,7 @@ import { Button, CardMedia, Grid, IconButton } from '@mui/material';
 import CustomButton from "../UI/button";
 import { DataContext } from "../context/DataProvider";
 import { ProductType } from "../types";
+import { useSelector } from "react-redux";
 
 const CartDetail: React.FC =() => {
   const [cartDetail , setcartDetail]=useState<ProductType>();
@@ -14,6 +15,7 @@ const CartDetail: React.FC =() => {
   console.log("params" , location)
   const id = location.pathname.split('/')[2]
   console.log("id" , id);
+  
   const {addtoWishlist, wishProducts , cartProducts , addtoCart} =useContext(DataContext);
 
   useEffect(() => {

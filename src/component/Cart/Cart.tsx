@@ -7,23 +7,27 @@ import CustomButton from "../../UI/button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import "../Cart/Cart.style";
 import { Wrapper } from "../Cart/Cart.style";
-import { ProductType } from "../../types";
+import { ProductsModel, ProductType } from "../../types";
 import { useAppDispatch, useAppSelector } from "../../hooks/react-hook";
+import { useSelector } from "react-redux";
+import { productsAction } from "../../store/productsaction";
+import { productsActions } from "../../store/productslice";
 
 export const Cart: React.FC<{
   product: ProductType;
 }> = ({ product }) => {
   const [itemInWishlist, setItemInWishlist] = useState(false);
   const [itemInAddToCart, setItemAddToCart] = useState(false);
-
+  const dispatch=useAppDispatch();
   const {addtoWishlist, wishProducts , removehandler,cartProducts , addtoCart} =useContext(DataContext);
   const navigate = useNavigate();
-  
+  const currentCart = useSelector((state:ProductsModel) =>state.cartProducts)
+  const currentWishData= useSelector((state:ProductsModel) =>state.wishProducts)
+  console.log("" , currentCart)
   // const clickhandler =() =>  {
   //   navigate(`/CartDetail/${id}`)
   // }
- 
-  return (
+  return ( 
     <>
       <Wrapper>
         <div
@@ -69,27 +73,40 @@ export const Cart: React.FC<{
        
         
           
-        {cartProducts.includes(product) ? (
+        {currentCart.includes(product) ? (
         <CustomButton>Added to Cart</CustomButton>
       ) : (
         <CustomButton
-          // onClick={() => {
-          //   console.log("data in wishlist" , cartProducts)
-          //   addtoCart(product);
-          // }}
+          onClick={
+            () => {
+              const obj = [...currentCart , product];
+              dispatch(productsActions.setCartProduct(obj))
+              localStorage.setItem("CartProducts", JSON.stringify(obj));
+              console.log("Data in Cart" ,obj )
+            
+            }
+          
+          }
         >
           Add to Cart
         </CustomButton>
       )}
         {/* <Button onClick={() => addtoWishlist(product)}>Add to wishlist</Button> */}
-        {wishProducts.includes(product) ? (
+        {currentWishData.includes(product) ? (
         <CustomButton>Added to wishlist</CustomButton>
       ) : (
         <CustomButton
-          // onClick={() => {
+          onClick={
+            () => {
+              const obj = [...currentWishData , product];
+              dispatch(productsActions.setWishProduct(obj))
+              localStorage.setItem("WishProducts", JSON.stringify(obj));
+              console.log("Data in Cart" ,obj )
+            
+            }
           //   console.log("data in wishlist" , wishProducts)
           //   addtoWishlist(product);
-          // }}
+           }
         >
           Add to wishlist
         </CustomButton>

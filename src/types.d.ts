@@ -26,5 +26,6 @@ export interface ProdAddNew {
 
 export interface ProductsModel {
   products: ProductType[];
-  
+  cartProducts: ProductType[];
+  wishProducts:ProductType[];
 }

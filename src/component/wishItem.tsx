@@ -11,7 +11,7 @@ const WishItem: React.FC<{
   item: ProductType;
   
 }> = ({ item }) => {
-  const {wishProductHandler} = useContext(DataContext)
+  //const {wishProductHandler} = useContext(DataContext)
   return (
     <Wrapper>
       
@@ -41,7 +41,7 @@ const WishItem: React.FC<{
           <CustomButton
             onClick={() => {
              
-                wishProductHandler(item);
+                //wishProductHandler(item);
             }}
           >
             Remove From WishList
