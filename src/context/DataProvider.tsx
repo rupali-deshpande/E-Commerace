@@ -39,12 +39,12 @@ export const DataProvider: React.FC<{ children: JSX.Element }> = (props) => {
   const [error, setError] = useState(null);
   const {REACT_APP_BASEURL }= process.env;
   useEffect(() => {
-    console.log("env" ,process.env.REACT_APP_BASEURL);
+    //console.log("env" ,process.env.REACT_APP_BASEURL);
     setLoading(true);
     axios
       .get('https://dummyjson.com/products')
       .then((res) => {
-        console.log("product data", res);
+        //console.log("product data", res);
         setItems(res.data.products);
 
         setLoading(false);
@@ -138,7 +138,7 @@ export const DataProvider: React.FC<{ children: JSX.Element }> = (props) => {
     console.log("form", data);
   };
 
-  console.log(items);
+  //console.log(items);
   return (
     <DataContext.Provider
       value={{

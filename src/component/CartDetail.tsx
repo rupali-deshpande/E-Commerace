@@ -22,7 +22,7 @@ const CartDetail: React.FC =() => {
     axios.get(`https://dummyjson.com/products/${id}`).then((response) => {
         console.log("id data" , response);
         setcartDetail(response.data)
-    })
+    }) 
     
   } , [id])
 
