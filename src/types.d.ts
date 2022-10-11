@@ -1,8 +1,8 @@
 declare module "*.module.css";
 declare module "*.gif";
 export interface ProductType {
-  _id?: string | undefined;
-  id?: string;
+  _id?: string;
+  id?: string|undefined;
   title: string;
   images: string;
   images:string[];
@@ -17,10 +17,10 @@ export interface ProductType {
 }
 
 export interface ProdAddNew {
-  title: string;
-  description: string | undefined;
-  images: string | undefined;
-  price: number | undefined;
+  Title?: string;
+  description?: string | undefined;
+  images?: string | undefined;
+  price?: number | undefined;
 }
 
 
@@ -28,4 +28,6 @@ export interface ProductsModel {
   products: ProductType[];
   cartProducts: ProductType[];
   wishProducts:ProductType[];
+  newproduct?:ProdAddNew;
+  
 }

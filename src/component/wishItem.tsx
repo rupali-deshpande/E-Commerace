@@ -1,17 +1,29 @@
 
 import { CardMedia } from '@mui/material';
 import {useContext} from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import { Wrapper } from '../App.style';
 
 import { DataContext } from "../context/DataProvider";
-import { ProductType } from '../types';
+import { productsAction } from '../store/productsaction';
+import { productsActions } from '../store/productslice';
+import { ProductsModel, ProductType } from '../types';
 import CustomButton from '../UI/button';
 
 const WishItem: React.FC<{
   item: ProductType;
   
 }> = ({ item }) => {
+  const wishProduct = useSelector((state: ProductsModel) => state.wishProducts);
+  const dispatch = useDispatch()
   //const {wishProductHandler} = useContext(DataContext)
+  const removeHandler=(item:ProductType) => {
+    const array = wishProduct.filter((element:ProductType) => {
+      return element.id !== item.id
+    }
+    )
+    dispatch(productsActions.setWishProduct(array))
+  }
   return (
     <Wrapper>
       
@@ -40,7 +52,7 @@ const WishItem: React.FC<{
         <div className="buttons">
           <CustomButton
             onClick={() => {
-             
+             removeHandler(item)
                 //wishProductHandler(item);
             }}
           >

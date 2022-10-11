@@ -9,11 +9,11 @@ import productSlice, { productsActions } from "./productslice";
 
 export const productsAction= productSlice;
 
-// export const fetchProducts=() : ThunkAction<void,RootState,unknown,AnyAction >=> {
-//     return async(dispatch,getAllProducts)=>{
-//         if(getAllProducts().products.length==0){
-//             const response:ProductType[]= await service.getAllProducts()
-//             dispatch(productsActions.setProducts(response))
-//         }
-//     }
-// }
+export const fetchProducts=() : ThunkAction<void,RootState,unknown,AnyAction >=> {
+    return async(dispatch,getAllProducts)=>{
+        if(getAllProducts().products.length==0){
+            const response = await service.getAllProducts()
+            dispatch(productsActions.setProducts(response))
+        }
+    }
+}

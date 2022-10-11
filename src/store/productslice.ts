@@ -7,7 +7,13 @@ import { productsAction } from "./productsaction";
 const initailizeProductState:ProductsModel= {
     products:[],
     cartProducts:[],
-    wishProducts:[]
+    wishProducts:[],
+    newproduct: {
+        Title:"",
+        images:"",
+        description:"",
+        price: 0 
+    }
 }
 
 const productSlice=createSlice(
@@ -23,6 +29,9 @@ const productSlice=createSlice(
             },
             setWishProduct(state , action){
                 state.wishProducts=action.payload
+            },
+            addproduct(state,action){
+                state.newproduct=action.payload
             }
         }
     }

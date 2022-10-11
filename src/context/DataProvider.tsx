@@ -10,7 +10,7 @@ interface AppState {
   wishProducts: ProductType[];
   addtoCart: (data: ProductType) => void;
   addtoWishlist: (data: ProductType) => void;
-  formFN: (data: ProductType) => void;
+  //formFN: (data: ProductType) => void;
   isLoading: boolean;
   wishProductHandler: (data: ProductType) => void;
   addtocartProductHandler: (data: ProductType) => void;
@@ -23,7 +23,7 @@ export const DataContext = React.createContext<AppState>({
   wishProducts: [],
   addtoCart: () => {},
   addtoWishlist: () => {},
-  formFN: () => {},
+  //formFN: () => {},
   isLoading: false,
   wishProductHandler: () => {},
   addtocartProductHandler: () => {},
@@ -148,7 +148,7 @@ export const DataProvider: React.FC<{ children: JSX.Element }> = (props) => {
         addtoCart: addToCartHandle,
         addtoWishlist: wishListHandler,
         isLoading: isLoading,
-        formFN: prodAdd,
+       // formFN: prodAdd,
         wishProductHandler: wishProductHandle,
         addtocartProductHandler: addtoProductHandle,
         removehandler: removeitem,

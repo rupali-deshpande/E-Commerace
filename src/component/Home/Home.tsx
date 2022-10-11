@@ -22,7 +22,7 @@ export const Home: React.FC<{}> = () => {
 
   let navigate = useNavigate();
   const handleOnClick = () => {
-    navigate(`/admin`);
+    navigate(`/admi`);
   };
   useEffect(() => {
     

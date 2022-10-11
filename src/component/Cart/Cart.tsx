@@ -27,7 +27,7 @@ export const Cart: React.FC<{
       <Wrapper>
         <div
           onClick={() => {
-            navigate(`/Shop/${product.id}`);
+            navigate(`/product/${product.id}`);
           }}
         >
           <CardMedia

@@ -6,10 +6,11 @@ import { useLocation } from "react-router-dom";
 import { DataContext } from "../../context/DataProvider";
 import { productsAction } from "../../store/productsaction";
 import { productsActions } from "../../store/productslice";
-import { ProductsModel } from "../../types";
+import { ProdAddNew, ProductsModel } from "../../types";
 import { Product } from "../Product/Product";
 import { createNewProduct } from "../Service/service";
 import SendIcon from "@mui/icons-material/Send";
+import { newproductsagaAction } from "../../Saga/sagaaction";
 
 const addProduct = async (path: string, data: {}) => {
   try {
@@ -34,14 +35,9 @@ export function Admin() {
   const [enterImage, setImage] = useState("");
   const [enterDescription, setDescription] = useState("");
   const [enterPrice, setprice] = useState(Number);
-const [productInput , setproductInput]=useState({
-  Title:"",
-  image:"",
-  Description:"",
-  price:""
-});
-const dispatch = useDispatch()
-const products=useSelector((state:ProductsModel)=>state.products);
+  const [productInput, setproductInput] = useState<ProdAddNew>();
+  const dispatch = useDispatch();
+  const products = useSelector((state: ProductsModel) => state.products);
   const location = useLocation();
   const urlvalue = new URLSearchParams(location.search);
   const value = urlvalue.get("q") || "React Test";
@@ -64,20 +60,12 @@ const products=useSelector((state:ProductsModel)=>state.products);
   };
 
   const submitHandler = (event: React.SyntheticEvent) => {
+    console.log(" form data");
     event.preventDefault();
+    dispatch({ type: newproductsagaAction.NEWLY_ADD_DATA });
 
-    if (
-      productInput
-    ) {
+    // TypeScript knows that ref is not null here
 
-
-      createNewProduct().then((prod)=> {
-        const newproductArray = [...products , prod];
-        dispatch(productsActions.setProducts(newproductArray))
-
-      })
-      // TypeScript knows that ref is not null here
-      
     //   axios
     //     .post("http://127.0.0.1:8000/api/v1/products", refObje)
     //     .then((response) => {
@@ -85,7 +73,6 @@ const products=useSelector((state:ProductsModel)=>state.products);
     //       //formFN(response.data.product)
     //       return response.data.product;
     //     });
-    
 
     // console.log(titleRef.current.value);
 
@@ -101,129 +88,76 @@ const products=useSelector((state:ProductsModel)=>state.products);
     //setTitle('');
     //setDescription('');
     //setprize(0);
-    }
   };
   const handleInput = (e: React.FormEvent) => {
     // console.log(e)
     setproductInput((prevstate) => {
-      const value = (e.target as HTMLInputElement).value
-      console.log(productInput)
-      return {...prevstate, [(e.target as HTMLInputElement).name]: value}
-      
-  
-    }
-    )
-   console.log()
-  }
+      const value = (e.target as HTMLInputElement).value;
+      console.log(productInput);
+      return { ...prevstate, [(e.target as HTMLInputElement).name]: value };
+    });
+    console.log();
+  };
   return (
-    // <form onSubmit={submitHandler} className="form">
-    //   <div>
-    //     <div>
-    //       <input disabled defaultValue={value} />
-    //     </div>
-    //     <div>
-    //       <label>Title </label>
-    //       <input
-    //         value={enterTitle}
-    //         onChange={handleInput}
-    //         type="text"
-    //         ref={titleRef}
-    //       />
-    //     </div>
-    //     <div>
-    //       <label>Description </label>
-    //       <input
-    //         value={enterDescription}
-    //         onChange={handleInput}
-    //         type="text"
-    //         ref={descriptionRef}
-    //       />
-    //     </div>
-    //     <div>
-    //       <label>prize </label>
-    //       <input
-    //         value={enterPrice}
-    //         ref={prizeRef}
-    //         onChange={handleInput}
-    //         type="number"
-            
-    //       />
-    //     </div>
-    //     <div>
-    //       <label>Image </label>
-    //       <input
-    //         type="file"
-    //         value={enterImage}
-    //         ref={imageRef}
-    //         onChange={handleInput}
-    //       />
-    //     </div>
-    //   </div>
-    //   <div>
-    //     <button type="submit" value="Submit">
-    //       Submit
-    //     </button>
-    //   </div>
-    // </form>
-
-<>
-    <Box>
+    <>
+      <Box>
         <form onSubmit={submitHandler}>
-        <Grid item spacing={3}>
-          <TextField
-            disabled
-            id="outlined-disabled"
-            label="Disabled"
-           
-          /></Grid>
-           <Grid item spacing={3}>
-          <TextField
-            id="standard-basic"
-            label="Title"
-            variant="standard"
-            inputRef={titleRef}
-            onChange={handleInput}
-            name='Title'
-          /></Grid>
-            <Grid item spacing={3}>
-          <TextField
-            id="standard-basic"
-            label="Description"
-            name='Description'
-            variant="standard"
-            multiline
-            rows={2}
-            inputRef={descriptionRef}
-            onChange={handleInput}
-          /></Grid>
           <Grid item spacing={3}>
-          <TextField
-            id="standard-basic"
-            label="price"
-            name='price'
-            variant="standard"
-            inputRef={prizeRef}
-            onChange={handleInput}
-          /></Grid>
+            <TextField disabled id="outlined-disabled" label="Disabled" />
+          </Grid>
           <Grid item spacing={3}>
-          <TextField
-            id="standard-basic"
-            label="image"
-            name='price'
-            variant="standard"
-            inputRef={imageRef}
-            onChange={handleInput}
-          />
-          <input
-            accept="image/*"
-            id="contained-button-file"
-            multiple
-            type="file"
-          /></Grid>
-           <Grid item spacing={3}>
-          <Button type="submit" variant="contained" endIcon={<SendIcon />}>
-            Submit
-          </Button></Grid>
+            <TextField
+              id="standard-basic"
+              label="Title"
+              variant="standard"
+              inputRef={titleRef}
+              onChange={handleInput}
+              name="Title"
+            />
+          </Grid>
+          <Grid item spacing={3}>
+            <TextField
+              id="standard-basic"
+              label="Description"
+              name="Description"
+              variant="standard"
+              multiline
+              rows={2}
+              inputRef={descriptionRef}
+              onChange={handleInput}
+            />
+          </Grid>
+          <Grid item spacing={3}>
+            <TextField
+              id="standard-basic"
+              label="price"
+              name="price"
+              variant="standard"
+              inputRef={prizeRef}
+              onChange={handleInput}
+            />
+          </Grid>
+          <Grid item spacing={3}>
+            <TextField
+              id="standard-basic"
+              label="image"
+              name="price"
+              variant="standard"
+              inputRef={imageRef}
+              onChange={handleInput}
+            />
+            <input
+              accept="image/*"
+              id="contained-button-file"
+              multiple
+              type="file"
+            />
+          </Grid>
+          <Grid item spacing={3}>
+            <Button type="submit" variant="contained" endIcon={<SendIcon />}>
+              Submit
+            </Button>
+          </Grid>
         </form>
       </Box>
     </>

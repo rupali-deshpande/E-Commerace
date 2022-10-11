@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ProductType } from "../../types";
+import { ProdAddNew, ProductType } from "../../types";
 import api from "./api"
 
 export default {  
@@ -26,12 +26,15 @@ export const getAllProductS = async () => {
     }
   };
 
-  export const createNewProduct = async() => {
-    try{
-        const response = await axios.post('https://dummyjson.com/products')
-        return response.data.product;
-    }
-    catch(err){
-        throw err;
-    }
+  export const createNewProduct = async (data:ProdAddNew) => {
+    return async() => {
+            try{
+                const response = await axios.post('https://dummyjson.com/products/add')
+                return response.data.product;
+            }
+            catch(err){
+                throw err;
+            }
+          }
+    
   }
