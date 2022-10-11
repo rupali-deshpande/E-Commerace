@@ -1,4 +1,4 @@
-import { Button, CardMedia, IconButton } from "@mui/material";
+import { Box, Button, Card, CardActions, CardContent, CardMedia, Grid, IconButton, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import CustomButton from "../../UI/button";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -8,7 +8,10 @@ import { ProductsModel, ProductType } from "../../types";
 import { useAppDispatch, useAppSelector } from "../../hooks/react-hook";
 import { useSelector } from "react-redux";
 import { productsActions } from "../../store/productslice";
-
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 export const Cart: React.FC<{
   product: ProductType;
 }> = ({ product }) => {
@@ -24,7 +27,59 @@ export const Cart: React.FC<{
   // }
   return (
     <>
-      <Wrapper>
+      <Grid key={product.id}>
+        <Card sx={{ maxWidth: 300 }}>
+        <Box  onClick={() => {
+            navigate(`/product/${product.id}`);
+          }}  sx={{ cursor: "pointer" }}>
+          <CardMedia component="img" src={product.images[0]} 
+          sx={{ height: 200, objectFit: "contain" }}></CardMedia>
+          <CardContent>
+            <Typography variant="h6">
+            {product.title.length > 20
+                ? product.title.substring(0, 20)
+                : product.title}{" "}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+            {product.description.length > 100
+                        ? product.description.substring(0, 100)
+                        
+                        :product.description}
+              </Typography>
+              <Typography mt={2} variant="h6" color="secondary">
+                ${product.price}
+              </Typography>
+          </CardContent>
+        </Box>
+        <CardActions>
+         
+            <Button
+            startIcon={
+              currentCart.includes(product) ?
+                (
+                  <FavoriteIcon />
+               ) : (
+                  <FavoriteBorderIcon />
+               )
+            }
+            size="small"
+            color="secondary"
+            onClick={() => {
+                const obj = [...currentCart, product];
+                dispatch(productsActions.setCartProduct(obj));
+                localStorage.setItem("CartProducts", JSON.stringify(obj));
+                console.log("Data in Cart", obj);
+              }}
+         />
+
+         <Button />
+          </CardActions>
+        </Card>
+      </Grid>
+    </>
+  );
+};
+{/* <Wrapper>
         <div
           onClick={() => {
             navigate(`/product/${product.id}`);
@@ -32,13 +87,8 @@ export const Cart: React.FC<{
         >
           <CardMedia
             component="img"
-            sx={{
-              height: 200,
-              width: 400,
-              maxHeight: { xs: 233, md: 167 },
-              maxWidth: { xs: 350, md: 250 },
-            }}
             src={product.images[0]}
+            sx={{ height: 200, objectFit: "contain" }}
           />
           <IconButton
             aria-label="delete"
@@ -94,7 +144,4 @@ export const Cart: React.FC<{
             </CustomButton>
           )}
         </div>
-      </Wrapper>
-    </>
-  );
-};
+      </Wrapper> */}

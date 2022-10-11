@@ -24,7 +24,7 @@ function HeaderNav () {
     <React.Fragment>
       <AppBar sx={{ background: "#063970" }}>
         <Toolbar>
-          <AddBusinessRoundedIcon sx={{ transform: "scale(2)" }} />
+          <AddBusinessRoundedIcon sx={{ transform: "scale(2)" }}  onClick={() => navigate(`/home`)}/>
           {isMatch ? (
             <>
               <Typography sx={{ fontSize: "2rem", paddingLeft: "10%" }}>

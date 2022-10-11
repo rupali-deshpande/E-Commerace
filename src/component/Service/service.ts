@@ -27,14 +27,14 @@ export const getAllProductS = async () => {
   };
 
   export const createNewProduct = async (data:ProdAddNew) => {
-    return async() => {
+   
             try{
-                const response = await axios.post('https://dummyjson.com/products/add')
-                return response.data.product;
+                const response = await axios.post('https://dummyjson.com/products/add' , data)
+                return data;
             }
             catch(err){
                 throw err;
             }
-          }
+          
     
   }

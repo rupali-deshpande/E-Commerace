@@ -10,8 +10,8 @@ import { ProdAddNew, ProductsModel } from "../../types";
 import { Product } from "../Product/Product";
 import { createNewProduct } from "../Service/service";
 import SendIcon from "@mui/icons-material/Send";
-import { newproductsagaAction } from "../../Saga/sagaaction";
-
+// import { newproductsagaAction } from "../../Saga/sagaaction";
+import { NEWLY_ADD_DATA } from "../../Saga/sagaaction";
 const addProduct = async (path: string, data: {}) => {
   try {
     await axios
@@ -60,9 +60,9 @@ export function Admin() {
   };
 
   const submitHandler = (event: React.SyntheticEvent) => {
-    console.log(" form data");
+   // console.log(" form data");
     event.preventDefault();
-    dispatch({ type: newproductsagaAction.NEWLY_ADD_DATA });
+    dispatch({ type: NEWLY_ADD_DATA  , payload:productInput} );
 
     // TypeScript knows that ref is not null here
 
@@ -101,7 +101,7 @@ export function Admin() {
   return (
     <>
       <Box>
-        <form onSubmit={submitHandler}>
+        <form >
           <Grid item spacing={3}>
             <TextField disabled id="outlined-disabled" label="Disabled" />
           </Grid>
@@ -154,7 +154,7 @@ export function Admin() {
             />
           </Grid>
           <Grid item spacing={3}>
-            <Button type="submit" variant="contained" endIcon={<SendIcon />}>
+            <Button type="submit" onClick={submitHandler} variant="contained" endIcon={<SendIcon />}>
               Submit
             </Button>
           </Grid>

@@ -1,10 +1,11 @@
 
 
 
-import { call, takeEvery, put, takeLatest } from "redux-saga/effects";
+import { call, takeEvery, put, takeLatest, spawn } from "redux-saga/effects";
 
 import  {getAllProductS}  from '../component/Service/service';
 import { productsActions } from "../store/productslice";
+import { newProductrootSaga } from "./addnewproductsaga";
 import { sagaAction } from "./sagaaction";
 
 
@@ -21,7 +22,8 @@ import { sagaAction } from "./sagaaction";
 
 //watcher
 export  function* rootSaga() {
-  yield takeEvery(sagaAction.FETCH_DATA, fetchDataSaga );
+    yield spawn(newProductrootSaga)
+  yield spawn( fetchDataSaga );
 }
 
 
